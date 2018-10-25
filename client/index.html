@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>你画我猜 - 2018 NEU SWC Linux Lab</title>
+    <link href="./css/style.css" rel="stylesheet" />
+    <script defer="defer" src="./js/game.js"></script>
+    <script src="./js/jquery.js"></script>
+    <!-- / vue -->
+    <script src="./js/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+</head>
+
+<body>
+    <main class="container" id="app">
+        <!-- 标题 -->
+        <h1>「你画我猜」 - 2018 NEU SWC Linux Lab Made by Raven Guided by Kai</h1>
+        <div class="row">
+            <div style="float: left;width: 100%;">
+                <div style="margin-left:10px;margin-right: 400px;">
+                    <div class="box-sh">
+                        <!-- 绘图区 -->
+                        <canvas height="380">
+                            Sorry, Your Browser don't support canvas of Html5.
+                        </canvas>
+                        <!-- /绘图区 -->
+                        <!-- 工具栏 -->
+                        <div style="background-color: gainsboro">
+                            <div class="ctl-row" id="colors">
+                                <span class="text-blue fl" style="padding:0 4px 0;">颜色</span>
+                            </div>
+                            <div class="ctl-row">
+                                <span class="text-blue fl" style="padding:0 4px 0;">线宽</span>
+                                <input id="ranger" type="range" style="width: 100px;" value="1" min="1" step="1" max="10" />
+                                <span>1</span>
+                                <div class="fr" id="btns">
+                                    <a class="btn btn-blue btn-active-able" href="javascript:delete canvas.erase;">画笔</a>
+                                    <a class="btn btn-blue btn-active-able" href="javascript:canvas.erase=true;">橡皮擦</a>
+                                    <!-- <a class="btn btn-blue" onclick="socket.emit('clear paths');" href="javascript:;">清空</a> -->
+                                    <a class="btn btn-blue" onclick="this.href=canvas.toDataURL();" download="png.png">下载</a>
+                                </div>
+                                <div style="clear: both;"></div>
+                            </div>
+                        </div>
+                        <!--/工具栏-->
+                    </div>
+                    <main style="margin-top: 20px;">
+                        <!--信息-->
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="box-sh">
+                                    <h4>游戏操作</h4>
+                                    <!-- <div id="div-users" style="min-height:50px;max-height: 120px;overflow-y: scroll;">
+
+                                    </div> -->
+                                    <p class="fr" style="margin: 5px;">
+                                        <!-- <button class="btn btn-blue" id="btn-in" title="上场后，队列第一位将会上场绘画">上场！</button>
+                                        <button class="btn btn-blue" id="btn-autoin" title="自动上场">自动上场</button> -->
+                                        <button class="btn btn-blue" id="btn-start" v-on:click="start()">开始</button>
+                                        <!-- <button class="btn btn-blue" id="btn-refresh" v-on:click="refresh()">刷新</button>
+                                        <button class="btn btn-blue" id="btn-uploadimg" v-on:click="uploadimg()">上传</button> -->
+                                    </p>
+                                    <p style="clear: both"></p>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="box-sh">
+                                    <h4>信息栏</h4>
+                                    <div id="info" style="padding: 10px;overflow: scroll">
+                                        <p style="white-space: nowrap;"><label>绘图玩家：</label><strong id="player">{{info.curname}}</strong></p>
+                                        <p style="white-space: nowrap;"><label>关键词语：</label><strong id="word">{{info.key}}</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="box-sh">
+                                    <h4>欢迎</h4>
+                                    <div class="table-responsive">
+                                        <h4>早上好，{{myname}}</h4>
+                                        <h4>点击开始，开始新游戏</h4>
+                                        <!-- <table id="tops">
+                                            <tr role="template">
+                                                <td><label></label></td>
+                                                <td><strong></strong></td>
+                                                <td><em></em></td>
+                                            </tr>
+                                            <!--<li style="white-space: nowrap;" role="template"><label style="margin-right: 40px;"></label><strong style="margin-right: 20px;"></strong><em style="margin-right: 20px;padding-right: 10px;"></em></li>-->
+                                        <!-- </table> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--/信息-->
+                    </main>
+                </div>
+            </div>
+
+            <!--消息框-->
+            <div class="box-sh" style="margin-left: -380px;float: left;width:370px;">
+                <h3>消息框</h3>
+                <div id="msg" v-html="info.message">
+                    {{info.message}}
+                </div>
+                <input type="text" id="input-msg" placeholder="输入消息或者词语，回车键发送(仅限英文)" v-model="content" @keyup.enter="chat"/>
+            </div>
+            <!--/消息框-->
+            <!--关于-->
+            <!-- <div class="box-sh" style="margin-left: -380px;float: left;width:370px;">
+                <h3>关于</h3>
+            </div> -->
+            <!--/关于-->            
+        </div>
+    </main>
+</body>
+</html>
